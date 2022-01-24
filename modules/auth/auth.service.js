@@ -2,12 +2,17 @@ const bcrypt = require("bcryptjs");
 const error = require("../../lib/error");
 const logger = require("../../lib/logger");
 const { generateToken, generateRefreshToken } = require("./../auth.js");
+const mainDBHandler = require("../../database/main.handler");
 
 class ProfileService {
   constructor() {}
 
   async registerUser(req, data) {
     let { email = "", password = "" } = data;
+    console.log(
+      "🚀 ~ file: auth.service.js ~ line 11 ~ ProfileService ~ registerUser ~ data",
+      data
+    );
 
     if (email.length === 0 || password.length === 0) {
       throw error("NO_DATA_PROVIDED");
@@ -32,7 +37,7 @@ class ProfileService {
       data.password = _cryptPassword(password);
       data.active = true;
       data.type = "user";
-      data.email = email && email.toLowerCase();
+      data.email = email && email.toLowerCase().trim();
       let user = null;
 
       user = await mainDBHandler.insertOne(req, "profiles", data);

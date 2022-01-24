@@ -3,7 +3,7 @@ const error = require("../../lib/error");
 const service = require("./auth.service");
 
 const _manager = (social_type) => {
-  var handler = require("./" + social_type + "/manager");
+  // var handler = require("./" + social_type + "/manager");
 
   return handler;
 };
@@ -26,8 +26,8 @@ class AuthController {
   async processCommand(req, res, next) {
     const { mode, data = {} } = req.body;
     try {
-      const socialManager = _manager(data.social_type);
-
+      // const socialManager = _manager(data.social_type);
+      console.log("hey");
       let result;
       switch (mode) {
         case "register":
