@@ -53,6 +53,10 @@ module.exports.codes = {
     code: 404,
     message: "Not found",
   },
+  NOT_FOUND_EMAIL: {
+    code: 404,
+    message: "Email Not found",
+  },
   NOT_ALLOWED: {
     code: 405,
     message: "Not allowed",

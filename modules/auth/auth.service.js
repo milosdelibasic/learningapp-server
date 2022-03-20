@@ -72,16 +72,19 @@ class ProfileService {
     }
     try {
       const foundByEmail = await mainDBHandler.findOne(req, "profiles", {
-        email: email.toLowerCase(),
+        email: email.toLowerCase().trim(),
       });
-      if (!foundByEmail || foundByEmail.type !== "user")
-        throw error("NOT_FOUND_EMAIL");
+      if (!foundByEmail || foundByEmail.type !== "user") {
+        throw error("INVALID_EMAIL_PASSWORD");
+      }
       const found = foundByEmail;
       if (!_validatePassword(password, found.password)) {
-        throw error("INVALID_PASSWORD");
+        throw error("INVALID_EMAIL_PASSWORD");
       }
 
       if (found && found.password) delete found.password;
+      if (found && found.updatedAt) delete found.updatedAt;
+      if (found && found.type) delete found.type;
 
       const token = await generateToken(found);
       const refreshToken = await generateRefreshToken(found._id);

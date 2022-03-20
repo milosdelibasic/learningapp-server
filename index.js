@@ -70,7 +70,8 @@ const _init = async (app) => {
       await jobs.start();
     }
     websocket.start(app.server);
-    if (subscriber) subscriber.subscribe(["messages", "chats"], [websocket], app);
+    if (subscriber)
+      subscriber.subscribe(["messages", "chats"], [websocket], app);
 
     await router.load(app);
     logger.system("info", "Main All modules loaded.");
